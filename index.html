@@ -10,22 +10,22 @@
 
     <link rel="manifest" href="manifest.json">
     
-    <!-- Загрузка JQuery с CDN -->
+    <!-- Loading JQuery from CDN -->
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-    <!-- Загрузка SoundFontPlayer.js с CDN -->
+    <!-- Loading SoundFontPlayer.js from CDN -->
     <script src="https://cdn.jsdelivr.net/npm/soundfont-player@0.12.0/dist/soundfont-player.min.js"></script>
-    <!-- Загрузка Pico.css с CDN -->
+    <!-- Loading Pico.css from CDN -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1.5.13/css/pico.min.css">
     
 
-    <!-- Загрузка стилей для кнопки переключения темы -->
+    <!-- Loading styles for theme switcher button -->
     <link rel="stylesheet" href="/css/pico-theme-switcher.css">
     <link rel="stylesheet" href="/css/pico-color-picker.css">
 
-    <!-- Код, отвечающий за полный экран -->
+    <!-- Fullscreen script -->
     <script src="/js/fullscreen.js"></script>
 
-    <!-- Загрузка стилей для калимбы -->
+    <!-- Loading kalimba styles -->
     <link rel="stylesheet" href="/css/kalimba.css">
 
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.3/gh-fork-ribbon.min.css" /> -->
@@ -51,11 +51,11 @@
 
         <section>
             <article id="main-container" data-theme="generated">
-                <!-- Блок с клавишами -->
+                <!-- Keys block -->
                 <div class="kalimba-container" aria-busy="true">
-                    <!-- Заполняется в /js/kalimba.js -->
+                    <!-- Populated in /js/kalimba.js -->
                 </div>
-                <!-- Блок с кнопками -->
+                <!-- Buttons block -->
                 <div class="buttons-container">
                     <!-- Кнопка "Fullscreen" -->
                     <button id="fullscreenButton" class="button" aria-label="Fullscreen button" title="Fullscreen button">
@@ -110,7 +110,7 @@
 
                                 setTimeout(function () {
                                     btn.removeClass('loading').attr('disabled', false);
-                                }, 3000); // Просто для демонстрации. Можете изменить на ваше время загрузки.
+                                }, 3000); // Just for demonstration. You can change this to your loading time.
                             });
                         });
                     </script>
@@ -145,7 +145,7 @@
                         <span data-i18n="option.tune"> Tune keys: </span>
                     </label>
                     <div class="tune-field">
-                        <!-- Заполняется в /js/kalimba.js в updateTunes() -->
+                        <!-- Populated in /js/kalimba.js in updateTunes() -->
                     </div>
                 </fieldset>
 
@@ -200,26 +200,26 @@
                         Localization:
                     </label>
                     <select id="localization" required>
-                        <!-- Заполняется в /js/lang.js -->
+                        <!-- Populated in /js/lang.js -->
                     </select>
                 </fieldset>
 
                 <fieldset id="customization" class="option-color">
                     <legend data-i18n="option.color">Color:</legend>
-                    <!-- Заполняется в /js/pico-color-picker.js -->
+                    <!-- Populated in /js/pico-color-picker.js -->
                 </fieldset>
 
                 <fieldset id="keyboard_control" class="option-keyboardсontrol">
                     <legend data-i18n="option.keyboardсontrol">Keyboard Control:</legend>
                     <div id="keyboard_schemes" style="display: flex;">
-                        <!-- Заполняется в js/kalimba.js на основе keyboardSchemes -->
+                        <!-- Populated in js/kalimba.js based on keyboardSchemes -->
                     </div>
                     <small data-i18n="option.spaceincrease">The "Space" key increases the octave by 1</small>
                 </fieldset>
 
                 <fieldset class="option-kb_container">
                     <div id="keyboard_container" class="kb_container">
-                        <!-- Заполняется в js/kalimba.js в createKeyboard() -->
+                        <!-- Populated in js/kalimba.js in createKeyboard() -->
                     </div>
                 </fieldset>
 
@@ -244,35 +244,35 @@
     <!-- <a class="github-fork-ribbon" href="https://github.com/Dunamis4tw/kalimba-online" target="_blank" data-ribbon="Fork me on GitHub" title="Fork me on GitHub">Fork me on GitHub</a>
     <style>.github-fork-ribbon:before { background-color: var(--switch-background-color); }</style> -->
 
-    <!-- Скрипт смены темы -->
-    <button class="contrast switcher theme-switcher"><i data-i18n="theme.darkmode.on" theme="dark">Turn on dark mode</i><!-- нужно, чтобы span не ставил пробел
+    <!-- Theme switcher script -->
+    <button class="contrast switcher theme-switcher"><i data-i18n="theme.darkmode.on" theme="dark">Turn on dark mode</i><!-- needed so that span doesn't add a space
          --><i data-i18n="theme.darkmode.off" theme="light">Turn off dark mode</i></button>
     <script src="/js/pico-theme-switcher.js"></script>
     
-    <!-- Скрипт смены цвета темы -->
+    <!-- Theme color switcher script -->
     <script src="/js/pico-color-picker.js"></script>
-    <!-- Скрипт создания Калимбы -->
+    <!-- Kalimba creation script -->
     <script src="/js/kalimba.js"></script>
 
-    <!-- Скрипт локализации -->
+    <!-- Localization script -->
     <script src="/js/lang.js"></script>
 
     <script>
-        // Проверка поддержки service-worker и его регистрация
+        // Check service worker support and register it
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/service-worker.js')
                     .then(registration => {
-                        console.log('[Service-worker] Service Worker зарегистрирован с областью:', registration.scope);
+                        console.log('[Service-worker] Service Worker registered with scope:', registration.scope);
                     })
                     .catch(error => {
-                        console.log('[Service-worker] Регистрация Service Worker не удалась:', error);
+                        console.log('[Service-worker] Service Worker registration failed:', error);
                     });
             });
         }
     </script>
 
-    <!-- Скрипт, добавляющий кнопку консоли на сайте для отладки на телефонах -->
+    <!-- Script that adds a console button on the site for debugging on phones -->
     <!-- <script src="//cdn.jsdelivr.net/npm/eruda"></script>
     <script>eruda.init();</script> -->
 
