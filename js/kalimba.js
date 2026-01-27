@@ -489,10 +489,10 @@ class Kalimba_Online {
 
     // Plays the key shake animation
     keyShake(keyObj) {
-        keyObj.removeClass('key-click');
-        setTimeout(() => {
-            keyObj.addClass('key-click');
-        }, 1);
+        const el = keyObj[0];
+        el.classList.remove('key-click');
+        void el.offsetWidth; // Force reflow so the browser registers the removal
+        el.classList.add('key-click');
     }
 }
 
