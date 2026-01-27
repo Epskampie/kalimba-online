@@ -1,5 +1,5 @@
 html {
-    /* Отключает двойной тап по экрану */
+    /* Disables double tap on screen */
     touch-action: manipulation;
 }
 
@@ -11,15 +11,15 @@ html {
     touch-action: none;
 }
 
-/* Для телефонов */
+/* For phones */
 @media (min-width: 0px) {
     .kalimba-container {
-        /* Отступы между между клавишами */
+        /* Spacing between keys */
         justify-content: space-evenly;
     }
 }
 
-/* Для ПК */
+/* For desktop */
 @media (min-width: 768px) {
     .kalimba-container {
         justify-content: center;
@@ -60,7 +60,7 @@ html {
 
 
 
-/* Для телефонов */
+/* For phones */
 @media (min-width: 0px) {
     .key {
         margin: 2px;
@@ -72,7 +72,7 @@ html {
     }
 }
 
-/* Для ПК */
+/* For desktop */
 @media (min-width: 768px) {
     .key {
         margin: 5px;
@@ -258,9 +258,9 @@ select {
 
 @keyframes shake2 {
     /*
-        Вибрация построена на основе следующей формулы
-        f(x) = (-0.093*x + 0,0927) * COS(100*x) * 1.2^(-10*x) 
-        https://www.desmos.com/calculator/aorly47ttb 
+        Vibration is based on the following formula
+        f(x) = (-0.093*x + 0.0927) * COS(100*x) * 1.2^(-10*x)
+        https://www.desmos.com/calculator/aorly47ttb
     */
     0% {transform: translate3d(0.093em, 0, 0);}
     4% {transform: translate3d(-0.085em, 0, 0);}
@@ -298,33 +298,33 @@ input[type=range][orient=vertical] {
     margin-bottom: 4px;
 }
 
-/* Настраиваем трек в Chrome, Opera, Safari, Edge */
+/* Customize track in Chrome, Opera, Safari, Edge */
 input[type=range][orient=vertical]::-webkit-slider-runnable-track {
     width: 5px;
 }
 
-/* Настраиваем трек в Mozilla Firefox */
+/* Customize track in Mozilla Firefox */
 input[type=range][orient=vertical]::-moz-range-track {
-    /* В Firefox высота трека отличается от других браузеров */
+    /* In Firefox, track height differs from other browsers */
     height: auto;
     width: 5px;
 }
 
-/* Настраиваем ползунок в Chrome, Opera, Safari, Edge */
+/* Customize thumb in Chrome, Opera, Safari, Edge */
 input[type=range][orient=vertical]::-webkit-slider-thumb {
     height: 23px;
     width: 23px;
     margin: 0 0 0 -9px;
 }
 
-/* Настраиваем ползунок в Firefox (он там почему то больше) */
+/* Customize thumb in Firefox (it's larger there for some reason) */
 input[type=range][orient=vertical]::-moz-range-thumb {
     height: 19px;
     width: 19px;
     margin: 0 0 0 -3px;
 }
 
-/* Меняем фон всех ползунков на текущий цвет темы */
+/* Change background of all thumbs to current theme color */
 input[type=range]::-moz-range-thumb {
     background: var(--primary);
 }
@@ -353,7 +353,7 @@ input[type=range]::-webkit-slider-thumb {
     flex-wrap: wrap;
 }
 
-/* Стиль для режима "Полный экран" */
+/* Style for fullscreen mode */
 .fullscreen {
     position: relative;
     display: flex;
@@ -367,10 +367,10 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 /* ** ** ** ** ** ** ** ** ** ** ** */
-/* ** ПАНЕЛЬ КНОПОК ПОД КАЛИМБОЙ ** */
+/* ** BUTTON PANEL BELOW KALIMBA ** */
 /* ** ** ** ** ** ** ** ** ** ** ** */
 
-/* Блок с кнопками под калимбой */
+/* Button block below kalimba */
 .buttons-container {
     margin-top: 1em;
     display: flex;
