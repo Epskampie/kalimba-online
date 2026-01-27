@@ -1,4 +1,4 @@
-/* Код кнопки смены полностью взят с оф. сайта */
+/* Theme switcher button code taken entirely from the official website */
 "use strict";
 !function () {
     var e = {
