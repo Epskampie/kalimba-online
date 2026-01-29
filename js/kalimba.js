@@ -255,7 +255,17 @@ class Kalimba_Online {
     lastTouchKeysPressed=[];
 
     // Load kalimba sounds
-    _audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    _audioContext = new (window.AudioContext || window.webkitAudioContext)({
+        latencyHint: 'interactive'
+    });
+
+    // Resume AudioContext if suspended (required for mobile browsers)
+    _ensureAudioContextResumed() {
+        if (this._audioContext.state === 'suspended') {
+            this._audioContext.resume();
+            console.log('AudioContext resumed');
+        }
+    }
 
     // Loads sounds
     loadSF() {
@@ -401,48 +411,47 @@ class Kalimba_Online {
                 }
             });
 
-            // Event: Single finger tap on a key
-            keyZone.on('touchstart', (event) => {
+            // Event: Single finger tap on a key (passive for lower latency)
+            keyZone[0].addEventListener('touchstart', (event) => {
                 // If this event fired, the user has a touchscreen
                 this.ifTouchscreen = true;
 
-                // let note = $(this).attr('note');
                 this.playSound(note);
-                // keyShake($('.key', this));
 
                 // Check the last screen touch
                 let key = $(event.touches[event.touches.length - 1].target);
                 // Find the parent element until it has a note attribute
                 let i = 0;
-                while (key.attr('note') === undefined && i<2) {
+                while (key.attr('note') === undefined && i < 2) {
                     key = key.parent();
                     i++;
                 }
                 // Get the note from the attribute and store it
                 this.lastTouchKeysPressed[event.touches.length - 1] = key.attr('note');
+            }, { passive: true });
 
-            });
-
-            // Event: Finger held down and dragged across keys
-            keyZone.on('touchmove', (event) => {
+            // Event: Finger held down and dragged across keys (passive for lower latency)
+            keyZone[0].addEventListener('touchmove', (event) => {
                 for (let j = 0; j < event.touches.length; j++) {
-                    var touch = event.touches[j]; // Get touch information
-                    var key = $(document.elementFromPoint(touch.clientX, touch.clientY));
+                    const touch = event.touches[j];
+                    const element = document.elementFromPoint(touch.clientX, touch.clientY);
+                    if (!element) continue;
 
-                    let i = 0;
-                    while (key.attr('note') === undefined && i<2) {
-                        key = key.parent();
-                        i++;
-                        // if (i>2) console.log(i);
-                    }
-                    let note = key.attr('note');
+                    const keyZoneEl = element.closest('.key-zone');
+                    if (!keyZoneEl) continue;
 
-                    if (note !== undefined && !this.lastTouchKeysPressed.includes(note)) {
-                        this.lastTouchKeysPressed[j]=note;
-                        this.playSound(note);
+                    const touchNote = keyZoneEl.getAttribute('note');
+                    if (touchNote && !this.lastTouchKeysPressed.includes(touchNote)) {
+                        this.lastTouchKeysPressed[j] = touchNote;
+                        this.playSound(touchNote);
                     }
                 }
-            });
+            }, { passive: true });
+
+            // Event: Clear pressed keys when fingers lift
+            keyZone[0].addEventListener('touchend', () => {
+                this.lastTouchKeysPressed = [];
+            }, { passive: true });
 
             // Add the created key to the field
             $('.kalimba-container').append(keyZone);
@@ -454,6 +463,7 @@ class Kalimba_Online {
 
     // Plays a sound
     playSound(note, options = { play: true, animate: true, record: true }) {
+        this._ensureAudioContextResumed();
 
         // Play sound if the play flag is set to true
         if (options.play) {
